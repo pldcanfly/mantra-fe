@@ -18,12 +18,14 @@
 </style>
 
 <template>
-  <router-link tag="div" class="row item" :to="{ name: 'RaidDetail', params: { id: event.id } }">
-    <div class="col-2 picture">
+  <router-link tag="div" class="item" :to="{ name: 'RaidDetail', params: { id: event.id } }">
+    <div class="picture">
       {{ event.picture }}
     </div>
-    <div class="col-10 content">
-      <h3>{{ event.name }}</h3>
+    <div class="content">
+      {{ event.name }}
+    </div>
+    <div class="date">
       {{ event.date }}
     </div>
   </router-link>

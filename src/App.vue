@@ -11,18 +11,26 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   color: $c-text;
+
+  .pagecontainer {
+    border: $c-border;
+    background-color: $c-medium-grey;
+    box-shadow: $box-shadow;
+      padding: 15px;
+      min-height: 90vh;
+  } 
 }
 </style>
 
 <template>
-  <div class="container-fluid pagecontainer">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-2">
         <Sidebar />
       </div>
       <div class="col-10">
         <Navigation />
-        <router-view />
+        <router-view class="pagecontainer" />
       </div>
     </div>
   </div>

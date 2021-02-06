@@ -1,6 +1,5 @@
 <template>
   <div class="raids">
-    <h1>Raids</h1>
     {{ events }}
   </div>
 </template>
