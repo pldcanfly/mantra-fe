@@ -4,7 +4,7 @@ type ClassTable = {
 
 type ClassItem = {
   name: string;
-  icon: string;
+  picture: string;
   speccs: SpeccTable;
 };
 

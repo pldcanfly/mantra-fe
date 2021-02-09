@@ -1,7 +1,7 @@
 <style lang="scss" scoped>
 .items {
   background-color: $c-medium-grey;
-  border: 10px solid $c-light-grey;
+  border: $c-border; 
   padding: 5px;
   box-shadow: $box-shadow;
 }
