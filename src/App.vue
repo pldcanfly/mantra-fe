@@ -5,7 +5,10 @@ body {
 }
 
 #app {
-  padding: 15px;
+  padding: 5px;
+  @media (min-width: 600px) {
+    padding: 15px;
+  }
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -16,21 +19,29 @@ body {
     border: $c-border;
     background-color: $c-medium-grey;
     box-shadow: $box-shadow;
+    padding: 5px;
+    @media (min-width: 600px) {
       padding: 15px;
-      min-height: 90vh;
-  } 
+    }
+    min-height: 90vh;
+    @media (min-width: 600px) {
+      padding: 15px;
+    }
+  }
 }
 </style>
 
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-2">
+      <div class="col-md-4 col-lg-2 col-12">
         <Sidebar />
       </div>
-      <div class="col-10">
+      <div class="col-md-8 col-lg-10 col-12">
         <Navigation />
-        <router-view class="pagecontainer" />
+        <router-view v-slot="{ Component }">
+          <component :is="Component" class="pagecontainer" />
+        </router-view>
       </div>
     </div>
   </div>

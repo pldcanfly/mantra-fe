@@ -2,6 +2,8 @@
 .icon {
   width: 30px;
   height: 30px;
+  margin: 1px;
+  border: 1px solid $c-light-grey;
 }
 </style>
 
@@ -9,20 +11,20 @@
   <div class="roster">
     <div class="container-fluid" :key="index" v-for="(char, index) in mains">
       <div class="row">
-        <div class="col-2">{{ char.name }}</div>
+        <div class="col-2" :style="`color:${getClassById(char.class).color}`">{{ char.name }}</div>
         <div class="col-10">
           <img class="icon" :src="char.female ? getRaceById(char.race).picture.female : getRaceById(char.race).picture.male" />
           <img class="icon" :src="getClassById(char.class).picture" />
-          {{ getClassById(char.class).speccs[char.specc].name }}
+          <img class="icon" :src="getClassById(char.class).speccs[char.specc].picture" />
         </div>
       </div>
 
       <div class="row twink" :key="index" v-for="(twink, index) in char.twinks">
-        <div class="col-2">---- {{ twink.name }}</div>
+        <div class="col-2" :style="`color:${getClassById(twink.class).color}`">- {{ twink.name }}</div>
         <div class="col-10">
           <img class="icon" :src="twink.female ? getRaceById(twink.race).picture.female : getRaceById(twink.race).picture.male" />
           <img class="icon" :src="getClassById(twink.class).picture" />
-          {{ getClassById(twink.class).speccs[twink.specc].name }}
+          <img class="icon" :src="getClassById(twink.class).speccs[twink.specc].picture" />
         </div>
       </div>
     </div>

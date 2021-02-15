@@ -9,14 +9,22 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/raids',
-    name: 'Raids',
-    component: () => import(/* webpackChunkName: "Raids" */ '../views/Raids.vue'),
+    name: 'RaidIndex',
+    component: () => import(/* webpackChunkName: "Raids" */ '../views/Raids/Index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Raids',
+        component: () => import(/* webpackChunkName: "Raids" */ '../views/Raids/Overview.vue'),
+      },
+      {
+        path: ':id',
+        name: 'RaidDetail',
+        component: () => import(/* webpackChunkName: "RaidDetails" */ '../views/Raids/Details.vue'),
+      },
+    ],
   },
-  {
-    path: '/raids/:id',
-    name: 'RaidDetail',
-    component: () => import(/* webpackChunkName: "RaidDetails" */ '../views/RaidDetails.vue'),
-  },
+
   {
     path: '/roster',
     name: 'Roster',

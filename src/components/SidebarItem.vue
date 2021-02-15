@@ -1,8 +1,24 @@
 <style lang="scss" scoped>
 .item {
+  display: flex;
   margin: 0;
+
+  margin-bottom: 10px;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
   .picture {
     background-color: $c-light-grey;
+
+    .icon {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .content {
+    margin-left: 10px;
+    align-self: center;
   }
 
   transition: all 0.2s;
@@ -20,13 +36,15 @@
 <template>
   <router-link tag="div" class="item" :to="{ name: 'RaidDetail', params: { id: event.id } }">
     <div class="picture">
-      {{ event.picture }}
+      <img class="icon" :src="event.picture" />
     </div>
     <div class="content">
-      {{ event.name }}
-    </div>
-    <div class="date">
-      {{ event.date }}
+      <div class="name">
+        {{ event.name }}
+      </div>
+      <div class="date">
+        {{ event.date }}
+      </div>
     </div>
   </router-link>
 </template>
