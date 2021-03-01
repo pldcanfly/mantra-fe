@@ -6,16 +6,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Home',
     component: Home,
-  },
-  {
-    path: '/raids',
-    name: 'RaidIndex',
-    component: () => import(/* webpackChunkName: "Raids" */ '../views/Raids/Index.vue'),
     children: [
       {
         path: '',
         name: 'Raids',
         component: () => import(/* webpackChunkName: "Raids" */ '../views/Raids/Overview.vue'),
+      },
+      {
+        path: 'new',
+        name: 'RaidNew',
+        component: () => import(/* webpackChunkName: "New" */ '../views/Raids/New.vue'),
       },
       {
         path: ':id',
@@ -24,7 +24,11 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import(/* webpackChunkName: "Profile" */ '../views/Profile.vue'),
+  },
   {
     path: '/roster',
     name: 'Roster',

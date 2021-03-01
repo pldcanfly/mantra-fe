@@ -35,3 +35,40 @@ type RaceItemPicture = {
   male: string;
   female: string;
 };
+
+type Char = {
+  id: number;
+  name: string;
+  class: number;
+  race: number;
+  specc: number;
+  female: boolean;
+  rank: string;
+  twink?: number;
+};
+
+type RaidEvent = {
+  id: number;
+  name: string;
+  picture: string;
+  date: string;
+  description: string;
+  size: number;
+};
+
+type RaidSignup = {
+  raidid: number;
+  actors: Array<RaidSignupActor>;
+};
+
+type RaidSignupActor = {
+  id: number;
+  position: RaidPosition;
+};
+
+type RaidSpot = {
+  free: boolean;
+  value: Char | string;
+};
+
+type RaidPosition = 'invited' | 'signed' | 'rejected' | 'benched' | number;

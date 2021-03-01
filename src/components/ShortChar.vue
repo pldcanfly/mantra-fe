@@ -1,44 +1,40 @@
 <style lang="scss" scoped>
 .shortchar {
-  $height: 25px;
-
-  background-color: $c-dark-grey;
-  display: flex;
+  $height: 35px;
+  background-color: $c-medium-grey;
   height: $height;
   line-height: $height;
-  width: 200px;
+  width: 100%;
+  max-width: 300px;
 
-  .roleicon {
-    height: $height;
-    width: $height;
-    background-color: $c-light-grey;
-    .icon {
+  .info-container {
+    display: flex;
+    align-items: center;
+    .roleicon {
       height: $height;
       width: $height;
+      background-size: cover;
     }
-  }
 
-  .name {
-    padding-left: 5px;
-  }
-
-  &.clicked {
-    background-color: $c-light-grey;
+    .name {
+      padding-left: 5px;
+      height: $height;
+    }
   }
 }
 </style>
 
 <template>
-  <div class="shortchar" :class="{ clicked: clicked }" @click="charClicked">
-    <div class="roleicon">
-      <img class="icon" :src="clazz.speccs[character.specc].picture" />
+  <div class="shortchar">
+    <div class="info-container">
+      <div class="roleicon" :style="`background-image:url(${clazz.speccs[character.specc].picture})`"></div>
+      <div class="name" :style="`color:${clazz.color}`">{{ character.name }} {{ character.twink ? '(T)' : '' }}</div>
     </div>
-    <div class="name" :style="`color:${clazz.color}`">{{ character.name }}</div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default defineComponent({
@@ -47,17 +43,10 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore();
-    const clicked = ref(false);
-
-    const charClicked = (test: any) => {
-      clicked.value = !clicked.value;
-    };
 
     const clazz = store.getters['getClassById'](props.character.class);
 
     return {
-      clicked,
-      charClicked,
       clazz,
     };
   },

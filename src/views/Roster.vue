@@ -20,7 +20,7 @@
       </div>
 
       <div class="row twink" :key="index" v-for="(twink, index) in char.twinks">
-        <div class="col-2" :style="`color:${getClassById(twink.class).color}`">- {{ twink.name }}</div>
+        <div class="col-2" :style="`color:${getClassById(twink.class).color}`">- {{ twink.name }} (T)</div>
         <div class="col-10">
           <img class="icon" :src="twink.female ? getRaceById(twink.race).picture.female : getRaceById(twink.race).picture.male" />
           <img class="icon" :src="getClassById(twink.class).picture" />
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, inject } from 'vue';
 import { useStore } from 'vuex';
 
 export default defineComponent({
@@ -43,6 +43,8 @@ export default defineComponent({
     mains.value = mains.map((char: any) => {
       char.twinks = store.getters['getTwinks'](char.id);
     });
+
+    (inject('setHeadline') as Function)('Roster');
 
     return {
       getClassById: store.getters['getClassById'],

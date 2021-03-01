@@ -1,43 +1,67 @@
-<style lang="scss">
-#navigation {
-  .nav-item {
+<style lang="scss" scoped>
+.navigation {
+  display: flex;
+
+  &.right {
+    justify-content: flex-end;
+  }
+
+  .logo {
     display: inline-block;
-    background-color: $c-medium-grey;
-    font-size: 26px;
-    margin-right: 6px;
-    padding: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
-    height: 50px;
-    transform: translateY(10px);
-    transition: background-color 0.5s;
+    height: $header-height;
+    line-height: $header-height;
+    margin-right: 20px;
+  }
+  .nav-item {
+    padding: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: inline-block;
+    height: $header-height;
+    line-height: $header-height;
+    transition: all $transition-length;
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 
     &:hover {
       background-color: $c-light-grey;
     }
 
-    &.router-link-active {
-      border: $c-border;
-      border-bottom: none;
-
-      height: 70px;
+    &.router-link-active,
+    &.active {
+      background-color: $c-light-grey;
     }
   }
 }
 </style>
 
 <template>
-  <nav id="navigation">
-    <router-link class="nav-item" :to="{ name: 'Raids' }">Raids</router-link>
-    <router-link class="nav-item" :to="{ name: 'Roster' }">Roster</router-link>
-    <!--  <router-link class="nav-item" to="#asdf"><s>Items</s></router-link>
-    <router-link class="nav-item" to="#asdf"><s>Consumes</s></router-link>
-    <router-link class="nav-item" to="#asdf"><s>Professions</s></router-link>-->
+  <nav class="navigation" :class="{ right }">
+    <div class="logo" v-if="logo">
+      {{ logo }}
+    </div>
+    <span :key="index" v-for="(item, index) in items">
+      <router-link class="nav-item" :to="item.props" v-if="item.type == 'link'">{{ item.text }}</router-link>
+      <span class="nav-item" @click="item.props" v-if="item.type == 'click'">{{ item.text }}</span>
+    </span>
   </nav>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-export default defineComponent({});
+export default defineComponent({
+  props: {
+    right: Boolean,
+    items: {
+      type: Array,
+      default: () => [],
+    },
+    logo: {
+      type: String,
+    },
+  },
+});
 </script>

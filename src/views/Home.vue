@@ -1,11 +1,9 @@
 <template>
-  <div class="home"></div>
+  <router-view />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-export default defineComponent({
-  name: 'Home',
-});
+export default defineComponent({});
 </script>
