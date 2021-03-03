@@ -44,10 +44,12 @@
       <div class="row">
         <div class="col-12"><h2 class="subheadline">Meine Charaktere</h2></div>
       </div>
+      {{ chars }}
       <div class="row">
         <div class="col-12 charlist">
           <LongChar :character="char" :key="char" v-for="char in chars" />
-          <div class="newchar">
+          <NewCharForm v-if="showNewchar" />
+          <div class="newchar" @click="onNewchar" v-if="!showNewchar">
             <Icon :path="mdiPlusBox" class="newcharicon" />
           </div>
         </div>
@@ -57,14 +59,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, computed } from 'vue';
+import { defineComponent, inject, computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import LongChar from '../components/LongChar.vue';
+import NewCharForm from '../components/NewCharForm.vue';
 import { mdiPlusBox } from '@mdi/js';
 
 export default defineComponent({
   components: {
     LongChar,
+    NewCharForm,
   },
   setup() {
     const store = useStore();
@@ -76,10 +80,15 @@ export default defineComponent({
         return char;
       })
     );
+    const showNewchar = ref(true);
+    const newchar = ref({ name: 'Name', class: 1, race: 1, specc: 1, female: false });
+    const onNewchar = () => {
+      showNewchar.value = true;
+    };
 
     (inject('setHeadline') as Function)('Mein Profil');
 
-    return { account, chars, mdiPlusBox };
+    return { account, chars, mdiPlusBox, newchar, showNewchar, onNewchar };
   },
 });
 </script>

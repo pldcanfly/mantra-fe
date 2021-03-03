@@ -9,11 +9,13 @@
     cursor: pointer;
     margin: 2px;
     transition: all $transition-length;
-    border: 0px solid $c-light-grey;
+
+    opacity: 0.7;
 
     &.active {
       filter: grayscale(0);
-      border: 2px solid $c-light-green;
+      opacity: 1;
+      border: 1px solid $c-light-green;
       //transform: translateY(5px);
     }
   }

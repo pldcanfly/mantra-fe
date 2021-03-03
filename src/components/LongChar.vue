@@ -20,6 +20,10 @@
     }
   }
 
+  input {
+    width: 100%;
+  }
+
   .controls {
     margin-top: 25px;
     font-size: 15px;
@@ -31,19 +35,17 @@
 <template>
   <div class="longchar">
     <div class="icons">
-      <img class="icon" :src="character.female ? race.picture.female : race.picture.male" />
+      <img class="icon" :src="char.female ? race.picture.female : race.picture.male" />
       <img class="icon" :src="clazz.picture" />
-      <img class="icon" :src="clazz.speccs[character.specc].picture" />
+      <img class="icon" :src="clazz.speccs[char.specc].picture" />
     </div>
     <div class="text">
-      <h3 :style="`color:${clazz.color}`">{{ character.name }}</h3>
-      <div>{{ clazz.name }}</div>
+      <h3 :style="`color:${clazz.color}`">{{ char.name }}</h3>
       <div>{{ race.name }}</div>
-      <div>{{ clazz.speccs[character.specc].name }}</div>
+      <div>{{ clazz.name }}</div>
+      <div>{{ clazz.speccs[char.specc].name }}</div>
     </div>
-    <div class="controls">
-      Löschen | Bearbeiten
-    </div>
+    <div class="controls"><a href="#">Löschen</a> <span>|</span> <a href="#">Bearbeiten</a></div>
   </div>
 </template>
 
@@ -54,15 +56,18 @@ import { useStore } from 'vuex';
 export default defineComponent({
   props: {
     character: { type: Object, required: true },
+    edit: { type: Boolean, default: false },
   },
   setup(props) {
     const store = useStore();
+    const char = ref(props.character);
 
-    const clazz = store.getters['getClassById'](props.character.class);
-    const race = store.getters['getRaceById'](props.character.race);
+    const clazz = computed(() => store.getters['getClassById'](char.value.class));
+    const race = computed(() => store.getters['getRaceById'](char.value.race));
 
     return {
       clazz,
+      char,
       race,
     };
   },
