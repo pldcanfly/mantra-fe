@@ -89,6 +89,19 @@ body {
     color: $c-light-green;
     text-decoration: none;
   }
+
+  button {
+    display: inline-block;
+
+    background-color: $c-green;
+    border: 0;
+    color: $c-text;
+    padding: 15px;
+    transition: all $transition-length;
+    &:hover {
+      background-color: $c-light-green;
+    }
+  }
 }
 </style>
 
@@ -99,29 +112,33 @@ body {
     <router-view v-slot="{ Component }">
       <component :is="Component" class="pagecontainer" />
     </router-view>
+
     <Debug />
+    <Notification />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, provide, computed } from 'vue';
+import { defineComponent, ref, provide } from 'vue';
 
 import Header from './components/Header.vue';
 import Debug from './components/util/Debug.vue';
-import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import Notification from './components/util/Notification.vue';
 
 export default defineComponent({
   components: {
     Header,
     Debug,
+    Notification,
   },
   setup() {
-    const router = useRouter();
     const headline = ref();
-
+    const store = useStore();
     provide('setHeadline', (hl: string) => {
       headline.value = hl;
     });
+    //store.dispatch('refresh');
 
     return {
       headline,

@@ -2,13 +2,18 @@
 #profile {
   .charlist {
     display: flex;
+    flex-wrap: wrap;
     .longchar,
-    .newchar {
+    .newchar,
+    .longcharform {
+      margin-bottom: 15px;
       margin-right: 15px;
+      box-shadow: $box-shadow;
     }
+
     .newchar {
-      width: 162px;
-      height: 100%;
+      width: 180px;
+
       min-height: 100px;
       background-color: $c-medium-grey;
       position: relative;
@@ -44,11 +49,11 @@
       <div class="row">
         <div class="col-12"><h2 class="subheadline">Meine Charaktere</h2></div>
       </div>
-      {{ chars }}
+
       <div class="row">
         <div class="col-12 charlist">
           <LongChar :character="char" :key="char" v-for="char in chars" />
-          <NewCharForm v-if="showNewchar" />
+          <LongCharForm v-if="showNewchar" />
           <div class="newchar" @click="onNewchar" v-if="!showNewchar">
             <Icon :path="mdiPlusBox" class="newcharicon" />
           </div>
@@ -62,25 +67,20 @@
 import { defineComponent, inject, computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import LongChar from '../components/LongChar.vue';
-import NewCharForm from '../components/NewCharForm.vue';
+import LongCharForm from '../components/LongCharForm.vue';
 import { mdiPlusBox } from '@mdi/js';
 
 export default defineComponent({
   components: {
     LongChar,
-    NewCharForm,
+    LongCharForm,
   },
   setup() {
     const store = useStore();
 
     const account = computed(() => store.getters.accountInfo);
-    const chars = computed(() =>
-      account.value.chars.map((char: Char) => {
-        char = store.getters.getChar(char);
-        return char;
-      })
-    );
-    const showNewchar = ref(true);
+    const chars = computed(() => store.getters.getCharsForAccount(account.value.id));
+    const showNewchar = ref(false);
     const newchar = ref({ name: 'Name', class: 1, race: 1, specc: 1, female: false });
     const onNewchar = () => {
       showNewchar.value = true;

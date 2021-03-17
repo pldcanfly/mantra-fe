@@ -18,7 +18,7 @@ type SpeccTable = {
 
 type SpeccItem = {
   name: string;
-  role: 'damage' | 'heal' | 'tank';
+  role: 'ranged' | 'melee' | 'heal' | 'tank';
   picture: string;
 };
 
@@ -44,7 +44,7 @@ type Char = {
   specc: number;
   female: boolean;
   rank: string;
-  twink?: number;
+  account: number;
 };
 
 type RaidEvent = {

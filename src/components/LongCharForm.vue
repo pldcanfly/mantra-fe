@@ -1,15 +1,22 @@
 <style lang="scss" scoped>
-.newcharform {
+.longcharform {
   background-color: $c-medium-grey;
 
   width: 100%;
-  max-width: 200px;
-  height: 100%;
+  max-width: 180px;
+
   min-height: 50px;
   padding-bottom: 15px;
+  position: relative;
 
   input {
     width: 100%;
+    border: 0;
+    border-radius: 0;
+
+    background-color: $c-dark-grey;
+    color: $c-text;
+    font-size: 20px;
   }
 
   .race,
@@ -36,11 +43,10 @@
       filter: grayscale(1);
       opacity: 0.7;
       width: 20%;
-      
 
       &.active {
-          transition: all $transition-length;
-          margin-left: 15px;
+        transition: all $transition-length;
+        margin-left: 15px;
         border: 1px solid $c-light-green;
         filter: grayscale(0);
         opacity: 1;
@@ -48,25 +54,27 @@
     }
   }
 
-  //   .class {
-  //     img {
-  //         width: 25%;
-  //     }
-  //   }
-
   .controls {
-    margin-top: 25px;
+    position: absolute;
+    bottom: 0;
+    height: 35px;
+    width: 100%;
     font-size: 15px;
     text-align: center;
+    button {
+      height: 35px;
+      width: 100%;
+      padding: 0 !important;
+    }
   }
 }
 </style>
 
 <template>
-  <div class="newcharform">
-    <input class="form-control" placeholder="Name" id="newchar_name" type="text" />
+  <div class="longcharform">
+    <input class="form-control" placeholder="Name" type="text" v-model="name" />
 
-    <div class="race">
+    <div class="race" v-if="race != 0 || name != ''">
       <img src="raceicons/orcm.png" :class="{ active: race == 1 && !female }" @click="onRaceClick(1, false)" v-if="race == 0 || (race == 1 && !female)" />
       <img src="raceicons/undeadm.png" :class="{ active: race == 2 && !female }" @click="onRaceClick(2, false)" v-if="race == 0 || (race == 2 && !female)" />
       <img src="raceicons/taurenm.png" :class="{ active: race == 3 && !female }" @click="onRaceClick(3, false)" v-if="race == 0 || (race == 3 && !female)" />
@@ -80,7 +88,7 @@
       <Icon class="reset" v-if="race != 0" @click="onRaceReset" :path="mdiCloseThick" />
     </div>
 
-    <div class="class" v-if="race != 0">
+    <div class="class" v-if="race != 0 || name != ''">
       <img src="classicons/warrior.png" :class="{ active: clazz == 1 }" @click="onClassClick(1)" v-if="[1, 2, 3, 4].includes(race) && (clazz == 0 || clazz == 1)" />
       <img src="classicons/paladin.png" :class="{ active: clazz == 2 }" @click="onClassClick(2)" v-if="[5].includes(race) && (clazz == 0 || clazz == 2)" />
       <img src="classicons/hunter.png" :class="{ active: clazz == 3 }" @click="onClassClick(3)" v-if="[1, 3, 4, 5].includes(race) && (clazz == 0 || clazz == 3)" />
@@ -92,13 +100,14 @@
       <img src="classicons/druid.png" :class="{ active: clazz == 9 }" @click="onClassClick(9)" v-if="[3].includes(race) && (clazz == 0 || clazz == 9)" />
       <Icon class="reset" v-if="clazz != 0" @click="onClassReset" :path="mdiCloseThick" />
     </div>
-  
+
     <div class="class" v-if="clazz != 0">
-      <img :src="spec.picture" :class="{ active: specc == index }" @click="onSpeccClick(index)" :key="spec.name" v-for="(spec,index) in speccinfo" />
-      <Icon class="reset" v-if="specc != 0" @click="onClassReset" :path="mdiCloseThick" />
+      <img :src="speccinfo[1].picture" :class="{ active: specc == 1 }" @click="onSpeccClick(1)" v-if="speccinfo[1] && (specc == 0 || specc == 1)" />
+      <img :src="speccinfo[2].picture" :class="{ active: specc == 2 }" @click="onSpeccClick(2)" v-if="speccinfo[2] && (specc == 0 || specc == 2)" />
+      <img :src="speccinfo[3].picture" :class="{ active: specc == 3 }" @click="onSpeccClick(3)" v-if="speccinfo[3] && (specc == 0 || specc == 3)" />
+      <img :src="speccinfo[4].picture" :class="{ active: specc == 4 }" @click="onSpeccClick(4)" v-if="speccinfo[4] && (specc == 0 || specc == 4)" />
+      <Icon class="reset" v-if="specc != 0" @click="onSpeccReset" :path="mdiCloseThick" />
     </div>
-    {{ speccinfo}}
-  
 
     <!-- <div class="icons">
       <img class="icon" :src="char.female ? race.picture.female : race.picture.male" />
@@ -111,27 +120,40 @@
       <div>{{ clazz.name }}</div>
       <div>{{ clazz.speccs[char.specc].name }}</div>
     </div> -->
-    <div class="controls"><a href="#">Speichern</a></div>
+    <div class="controls"><button class="save">Speichern</button></div>
   </div>
 </template>
 
 <script lang="ts">
 import { mdiCloseThick } from '@mdi/js';
-import { defineComponent, computed, ref,Ref } from 'vue';
+import { defineComponent, computed, ref, toRefs } from 'vue';
 import { useStore } from 'vuex';
 
 export default defineComponent({
+  props: {
+    character: {
+      type: Object as () => Char,
+      required: true,
+      default: () => {
+        return {
+          id: 0,
+          name: '',
+          race: 0,
+          specc: 0,
+          class: 0,
+          female: true,
+          account: 1,
+        };
+      },
+    },
+  },
   setup(props) {
-    const race = ref(0);
-    const name = ref('');
-    const specc = ref(0);
-    const clazz = ref(0);
-    const female = ref(true);
+    const race = ref(props.character.race);
+    const name = ref(props.character.name);
+    const specc = ref(props.character.specc);
+    const clazz = ref(props.character.class);
+    const female = ref(props.character.female);
     const store = useStore();
-    // const char = ref(props.character);
-
-    // const clazz = computed(() => store.getters['getClassById'](char.value.class));
-    // const race = computed(() => store.getters['getRaceById'](char.value.race));
 
     const onRaceClick = (raceid: number, femaleid: boolean) => {
       race.value = raceid;
@@ -139,50 +161,25 @@ export default defineComponent({
       clazz.value = 0;
       specc.value = 0;
     };
-
     const onSpeccClick = (speccid: number) => {
       specc.value = speccid;
     };
-
     const onSpeccReset = () => {
       specc.value = 0;
     };
-
     const onClassClick = (classid: number) => {
       clazz.value = classid;
     };
-
     const onRaceReset = () => {
       race.value = 0;
       clazz.value = 0;
       specc.value = 0;
     };
-
     const onClassReset = () => {
       clazz.value = 0;
       specc.value = 0;
     };
-
-    const speccinfo = computed(() => {
-        if(clazz.value != 0){
-        const speccs = store.getters.getClassById(clazz.value).speccs;
-            return speccs;
-        }
-        return {};
-    // if(clazz.value != 0){
-    //     
-    //     if(specc.value != 0){
-    //         console.log(speccs);
-    //         // @ts-ignore
-    //         return {}[specc.value]= speccs[specc.value];
-    //     } else {
-            
-    //     }
-        
-    // }
-    // return {};      
-    });
-
+    const speccinfo = computed(() => (clazz.value != 0 ? store.getters.getClassById(clazz.value).speccs : {}));
     return {
       mdiCloseThick,
       onSpeccReset,

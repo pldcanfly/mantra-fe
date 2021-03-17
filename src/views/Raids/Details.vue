@@ -23,6 +23,9 @@
     transition: all $transition-length;
     margin-bottom: 2px;
   }
+  .shortchar {
+    cursor: pointer;
+  }
 }
 .shortchar.clicked {
   position: fixed;
@@ -174,12 +177,10 @@ export default defineComponent({
 
     const selected = ref(1);
     const mychars = computed(() => {
-      console.log(store.getters.getActors(raid.value.id, 'invited'), store.state.account.chars);
-      return store.state.account.chars
-        .filter((id: number) => {
-          return store.getters.getActors(raid.value.id, 'invited').find((actor: RaidSignupActor) => actor.id == id) !== undefined;
-        })
-        .map((id: number) => store.getters.getChar(id));
+      //console.log(store.getters.getActors(raid.value.id, 'invited'), store.state.account.chars);
+      return store.getters.getCharsForAccount(store.state.auth.id).filter((char: Char) => {
+        return store.getters.getActors(raid.value.id, 'invited').find((actor: RaidSignupActor) => actor.id == char.id) !== undefined;
+      });
     });
     const signupClick = () => store.dispatch('setPosition', { raidid: raid.value.id, actorid: selected.value, position: 'signed' });
 

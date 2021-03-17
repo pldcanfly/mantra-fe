@@ -42,8 +42,8 @@ const classTable: ClassTable = {
     color: '#C69B6D',
     picture: 'classicons/warrior.png',
     speccs: {
-      1: { name: 'Arms', role: 'damage', picture: 'speccicons/warms.png' },
-      2: { name: 'Fury', role: 'damage', picture: 'speccicons/wfury.png' },
+      1: { name: 'Arms', role: 'melee', picture: 'speccicons/warms.png' },
+      2: { name: 'Fury', role: 'melee', picture: 'speccicons/wfury.png' },
       3: { name: 'Protection', role: 'tank', picture: 'speccicons/wprot.png' },
     },
   },
@@ -54,7 +54,7 @@ const classTable: ClassTable = {
     speccs: {
       1: { name: 'Holy', role: 'heal', picture: 'speccicons/pholy.png' },
       2: { name: 'Protection', role: 'tank', picture: 'speccicons/pprot.png' },
-      3: { name: 'Retribution', role: 'damage', picture: 'speccicons/pretri.png' },
+      3: { name: 'Retribution', role: 'melee', picture: 'speccicons/pretri.png' },
     },
   },
   3: {
@@ -62,9 +62,9 @@ const classTable: ClassTable = {
     color: '#AAD372',
     picture: 'classicons/hunter.png',
     speccs: {
-      1: { name: 'Beast Mastery', role: 'damage', picture: 'speccicons/hbm.png' },
-      2: { name: 'Marksmanship', role: 'damage', picture: 'speccicons/hmm.png' },
-      3: { name: 'Survival', role: 'damage', picture: 'speccicons/hsv.png' },
+      1: { name: 'Beast Mastery', role: 'ranged', picture: 'speccicons/hbm.png' },
+      2: { name: 'Marksmanship', role: 'ranged', picture: 'speccicons/hmm.png' },
+      3: { name: 'Survival', role: 'ranged', picture: 'speccicons/hsv.png' },
     },
   },
   4: {
@@ -72,9 +72,9 @@ const classTable: ClassTable = {
     color: '#FFF468',
     picture: 'classicons/rogue.png',
     speccs: {
-      1: { name: 'Assassination', role: 'damage', picture: 'speccicons/rassa.png' },
-      2: { name: 'Combat', role: 'damage', picture: 'speccicons/rcombat.png' },
-      3: { name: 'Subtlety', role: 'damage', picture: 'speccicons/rsub.png' },
+      1: { name: 'Assassination', role: 'melee', picture: 'speccicons/rassa.png' },
+      2: { name: 'Combat', role: 'melee', picture: 'speccicons/rcombat.png' },
+      3: { name: 'Subtlety', role: 'melee', picture: 'speccicons/rsub.png' },
     },
   },
   5: {
@@ -84,7 +84,7 @@ const classTable: ClassTable = {
     speccs: {
       1: { name: 'Discipline', role: 'heal', picture: 'speccicons/prdisc.png' },
       2: { name: 'Holy', role: 'heal', picture: 'speccicons/pholy.png' },
-      3: { name: 'Shadow', role: 'damage', picture: 'speccicons/prsdhadow.png' },
+      3: { name: 'Shadow', role: 'ranged', picture: 'speccicons/prshadow.png' },
     },
   },
   6: {
@@ -92,8 +92,8 @@ const classTable: ClassTable = {
     color: '#0070DD',
     picture: 'classicons/shaman.png',
     speccs: {
-      1: { name: 'Elemental', role: 'damage', picture: 'speccicons/sele.png' },
-      2: { name: 'Enhancment', role: 'damage', picture: 'speccicons/sench.png' },
+      1: { name: 'Elemental', role: 'ranged', picture: 'speccicons/sele.png' },
+      2: { name: 'Enhancement', role: 'melee', picture: 'speccicons/sench.png' },
       3: { name: 'Restoration', role: 'heal', picture: 'speccicons/sresto.png' },
     },
   },
@@ -102,8 +102,8 @@ const classTable: ClassTable = {
     color: '#3FC7EB',
     picture: 'classicons/mage.png',
     speccs: {
-      1: { name: 'Arcane', role: 'damage', picture: 'speccicons/marcane.png' },
-      2: { name: 'Fire', role: 'damage', picture: 'speccicons/mfire.png' },
+      1: { name: 'Arcane', role: 'ranged', picture: 'speccicons/marcane.png' },
+      2: { name: 'Fire', role: 'ranged', picture: 'speccicons/mfire.png' },
       3: { name: 'Frost', role: 'tank', picture: 'speccicons/mfrost.png' },
     },
   },
@@ -112,9 +112,9 @@ const classTable: ClassTable = {
     color: '#8788EE',
     picture: 'classicons/warlock.png',
     speccs: {
-      1: { name: 'Affliction', role: 'damage', picture: 'speccicons/waffli.png' },
-      2: { name: 'Demonology', role: 'damage', picture: 'speccicons/wdemo.png' },
-      3: { name: 'Destrution', role: 'tank', picture: 'speccicons/wdestro.png' },
+      1: { name: 'Affliction', role: 'ranged', picture: 'speccicons/waffli.png' },
+      2: { name: 'Demonology', role: 'ranged', picture: 'speccicons/wdemo.png' },
+      3: { name: 'Destrution', role: 'ranged', picture: 'speccicons/wdestro.png' },
     },
   },
   9: {
@@ -122,10 +122,10 @@ const classTable: ClassTable = {
     color: '#FF7C0A',
     picture: 'classicons/druid.png',
     speccs: {
-      1: { name: 'Balance', role: 'damage', picture: 'speccicons/dbalance.png' },
-      2: { name: 'Feral (Cat)', role: 'damage', picture: 'speccicons/dferal.png' },
+      1: { name: 'Balance', role: 'ranged', picture: 'speccicons/dbalance.png' },
+      2: { name: 'Feral (Cat)', role: 'melee', picture: 'speccicons/dferal.png' },
       3: { name: 'Restoration', role: 'heal', picture: 'speccicons/dresto.png' },
-      4: { name: 'Feral (Tank)', role: 'damage', picture: 'speccicons/dbear.png' },
+      4: { name: 'Feral (Tank)', role: 'tank', picture: 'speccicons/dbear.png' },
     },
   },
 };

@@ -6,7 +6,10 @@ const events = {
       { id: 3, name: 'Viewpartey', picture: 'icons/kara.png', date: '17.04.2020 19:00', description: 'Parryhaste :O', size: 25 },
       { id: 4, name: 'Epixxe looten', picture: 'icons/illidan.png', date: '17.04.2020 19:00', description: 'Warglaive Paladin inc!', size: 25 },
     ],
-    groups: [{ id: 1, name: 'Socials' }],
+    groups: [
+      { id: 1, name: 'Socials', members: [11] },
+      { id: 2, name: 'Elite', members: [1, 2, 3, 4, 5] },
+    ],
   },
   getters: {
     getEvents(context: any) {
@@ -14,6 +17,9 @@ const events = {
     },
     getEventById(context: any) {
       return (id: number) => context.events.find((item: any) => item.id == id);
+    },
+    getGroupById(context: any) {
+      return (id: number) => context.groups.find((item: any) => item.id == id);
     },
   },
   mutations: {},

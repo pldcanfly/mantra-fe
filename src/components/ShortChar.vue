@@ -28,7 +28,7 @@
   <div class="shortchar">
     <div class="info-container">
       <div class="roleicon" :style="`background-image:url(${clazz.speccs[character.specc].picture})`"></div>
-      <div class="name" :style="`color:${clazz.color}`">{{ character.name }} {{ character.twink ? '(T)' : '' }}</div>
+      <div class="name" :style="`color:${clazz.color}`">{{ character.name }}</div>
     </div>
   </div>
 </template>

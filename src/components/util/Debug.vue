@@ -5,16 +5,19 @@
       <!-- Screenwidth: {{ width }}px<br />
       Menustate: {{ menustate }} <br />
       Searchstate: {{ searchstate }}<br /> -->
-      <pre>{{ store.state.pickedup }}</pre>
+      <!-- <pre>{{ store.state.pickedup }}</pre> -->
       <span class="storestatebutton" @click="toggleState" v-if="!showState">Show Store</span>
-      <span class="storestatebutton" @click="toggleState" v-if="showState">Hide Store</span>
+      <span class="storestatebutton" @click="toggleState" v-if="showState">Hide Store</span><br />
       <pre v-if="showState">{{ store.state }}</pre>
-      <br />
-
       <span class="storestatebutton" @click="toggleRoute" v-if="!showRoute">Show RouteMeta</span>
       <span class="storestatebutton" @click="toggleRoute" v-if="showRoute">Hide RouteMeta</span><br />
       <pre v-if="showRoute">{{ route.meta }}</pre>
-      <br />
+
+      <span class="storestatebutton" @click="toggleAuth" v-if="!showAuth">Show Auth</span>
+      <span class="storestatebutton" @click="toggleAuth" v-if="showAuth">Hide Auth</span><br />
+      <span v-if="showAuth">refresh valid?: {{ validtoken }}</span
+      ><br v-if="showAuth" />
+      <pre v-if="showAuth">{{ store.state.auth }}</pre>
     </div>
   </teleport>
 </template>
@@ -28,7 +31,10 @@ export default defineComponent({
     const store = useStore();
     const showState = ref(false);
     const showRoute = ref(false);
+    const showAuth = ref(true);
     const route = useRoute();
+    const validtoken = computed(() => store.getters.validToken('refreshToken'));
+
     return {
       // width: computed(() => store.state.windowsize),
       // menustate: computed(() => store.state.menustate),
@@ -37,8 +43,11 @@ export default defineComponent({
       store,
       route,
       showRoute,
+      showAuth,
+      validtoken,
       toggleRoute: () => (showRoute.value = !showRoute.value),
       toggleState: () => (showState.value = !showState.value),
+      toggleAuth: () => (showAuth.value = !showAuth.value),
     };
   },
 });
